@@ -6,7 +6,8 @@
   "scripts": {
     "start": "python3 -m http.server 8080",
     "serve": "npx serve .",
-    "dev": "npx live-server --port=8080 --no-browser"
+    "dev": "npx live-server --port=8080 --no-browser",
+    "build:widget": "node scripts/build-widget.js"
   },
   "keywords": [
     "speed-reading",
