@@ -23,7 +23,7 @@
  *     widget.open();
  *   </script>
  *
- * Generated: 2026-01-15T18:56:27.405Z
+ * Generated: 2026-01-15T18:58:03.098Z
  */
 (function() {
 'use strict';
@@ -75,11 +75,9 @@ const WIDGET_STYLES = `
     display: none !important;
 }
 
-/* ==================== Floating Trigger Button ==================== */
+/* ==================== Trigger Button (Base) ==================== */
 .sr-trigger-btn {
-    position: fixed;
-    z-index: 999998;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
@@ -105,25 +103,38 @@ const WIDGET_STYLES = `
     height: 20px;
 }
 
-/* Button positions */
+/* Floating button positions (fixed positioning) */
 :host([data-position="bottom-right"]) .sr-trigger-btn {
+    position: fixed;
+    z-index: 999998;
     bottom: 1.5rem;
     right: 1.5rem;
 }
 
 :host([data-position="bottom-left"]) .sr-trigger-btn {
+    position: fixed;
+    z-index: 999998;
     bottom: 1.5rem;
     left: 1.5rem;
 }
 
 :host([data-position="top-right"]) .sr-trigger-btn {
+    position: fixed;
+    z-index: 999998;
     top: 1.5rem;
     right: 1.5rem;
 }
 
 :host([data-position="top-left"]) .sr-trigger-btn {
+    position: fixed;
+    z-index: 999998;
     top: 1.5rem;
     left: 1.5rem;
+}
+
+/* Inline button (no fixed positioning) */
+:host([data-position="inline"]) .sr-trigger-btn {
+    position: relative;
 }
 
 /* ==================== Modal Overlay ==================== */
@@ -1287,7 +1298,8 @@ class SpeedReaderWidget {
      * Mount widget to DOM
      */
     mount() {
-        if (this.options.mode === 'inline' && this.options.container) {
+        // For inline mode or inline button position, use container
+        if (this.options.container) {
             const container = document.querySelector(this.options.container);
             if (container) {
                 container.appendChild(this.hostElement);

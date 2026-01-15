@@ -104,7 +104,8 @@ class SpeedReaderWidget {
      * Mount widget to DOM
      */
     mount() {
-        if (this.options.mode === 'inline' && this.options.container) {
+        // For inline mode or inline button position, use container
+        if (this.options.container) {
             const container = document.querySelector(this.options.container);
             if (container) {
                 container.appendChild(this.hostElement);
