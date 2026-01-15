@@ -23,7 +23,7 @@
  *     widget.open();
  *   </script>
  *
- * Generated: 2026-01-15T18:58:03.098Z
+ * Generated: 2026-01-15T19:07:29.465Z
  */
 (function() {
 'use strict';
@@ -47,6 +47,9 @@ const WIDGET_STYLES = `
     --sr-accent-color: #3b82f6;
     --sr-accent-hover: #2563eb;
     --sr-anchor-color: #ef4444;
+    --sr-btn-bg: #1a1a1a;
+    --sr-btn-color: #ffffff;
+    --sr-btn-hover: #333333;
     --sr-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --sr-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --sr-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -68,6 +71,9 @@ const WIDGET_STYLES = `
     --sr-text-primary: #ffffff;
     --sr-text-secondary: #9ca3af;
     --sr-border-color: #404040;
+    --sr-btn-bg: #ffffff;
+    --sr-btn-color: #1a1a1a;
+    --sr-btn-hover: #e5e5e5;
 }
 
 /* ==================== Utility Classes ==================== */
@@ -80,21 +86,22 @@ const WIDGET_STYLES = `
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    margin: 12px;
     padding: 0.75rem 1.25rem;
-    background: var(--sr-accent-color);
-    color: white;
+    background: var(--sr-btn-bg);
+    color: var(--sr-btn-color);
     border: none;
     border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: var(--sr-shadow-lg);
+    box-shadow: var(--sr-shadow-md);
     transition: var(--sr-transition);
     font-family: inherit;
 }
 
 .sr-trigger-btn:hover {
-    background: var(--sr-accent-hover);
+    background: var(--sr-btn-hover);
     transform: scale(1.05);
 }
 
