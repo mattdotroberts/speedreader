@@ -53,13 +53,14 @@ class SpeedReaderApp {
     }
 
     /**
-     * Check for URL in path and auto-load content
+     * Check for URL in query parameter and auto-load content
      */
     checkURLParameters() {
-        // Extract URL from path: /https://example.com/article -> https://example.com/article
-        const path = window.location.pathname.slice(1);
-        if (path && (path.startsWith('http://') || path.startsWith('https://'))) {
-            this.urlInput.value = decodeURIComponent(path);
+        // Extract URL from query parameter: ?url=https://example.com/article
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+        if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+            this.urlInput.value = url;
             this.handleURLLoad();
         }
     }
@@ -133,7 +134,7 @@ class SpeedReaderApp {
             this.loadArticle(text, source, title);
 
             // Update URL for sharing
-            history.replaceState({}, '', `/${source}`);
+            history.replaceState({}, '', `?url=${encodeURIComponent(source)}`);
         } catch (error) {
             this.hideLoading();
             this.showError(error.message);
@@ -154,8 +155,8 @@ class SpeedReaderApp {
         this.closeModal();
         this.textInput.value = '';
 
-        // Clear URL path
-        history.replaceState({}, '', '/');
+        // Clear URL query parameter
+        history.replaceState({}, '', window.location.pathname);
     }
 
     /**
@@ -320,7 +321,7 @@ class SpeedReaderApp {
 
             // Update URL if it was a URL source
             if (item.source && item.source !== 'text') {
-                window.history.replaceState({}, '', `/${item.source}`);
+                window.history.replaceState({}, '', `?url=${encodeURIComponent(item.source)}`);
             }
         }
     }

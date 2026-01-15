@@ -16,9 +16,9 @@ npm run dev        # Live reload server on port 8080
 
 Or simply open `index.html` directly in a browser.
 
-## URL Path
+## URL Parameters
 
-- `/https://example.com/article` - Auto-loads article from URL on page load
+- `?url=https://example.com/article` - Auto-loads article from URL on page load
 
 ## Architecture
 
