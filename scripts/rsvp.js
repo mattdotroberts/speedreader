@@ -44,9 +44,14 @@ class RSVPEngine {
      */
     setWPM(wpm) {
         this.wpm = wpm;
+        // Restart interval with new speed without resetting position
         if (this.isPlaying) {
-            this.stop();
-            this.play();
+            clearInterval(this.interval);
+            this.interval = setInterval(() => {
+                this.currentIndex++;
+                this.updateDisplay();
+                this.updateTime();
+            }, this.getInterval());
         }
     }
 

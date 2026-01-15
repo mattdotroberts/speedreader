@@ -23,7 +23,7 @@
  *     widget.open();
  *   </script>
  *
- * Generated: 2026-01-15T18:44:46.969Z
+ * Generated: 2026-01-15T18:56:27.405Z
  */
 (function() {
 'use strict';
@@ -900,9 +900,14 @@ class WidgetRSVPEngine {
      */
     setWPM(wpm) {
         this.wpm = wpm;
+        // Restart interval with new speed without resetting position
         if (this.isPlaying) {
-            this.stop();
-            this.play();
+            clearInterval(this.interval);
+            this.interval = setInterval(() => {
+                this.currentIndex++;
+                this.updateDisplay();
+                this.updateTime();
+            }, this.getInterval());
         }
     }
 
