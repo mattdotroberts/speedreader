@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Reader</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header with Input Controls -->
+        <header class="app-header">
+            <h1 class="logo">Speed Reader</h1>
+            <div class="input-bar">
+                <input type="url"
+                       id="urlInput"
+                       class="input-field"
+                       placeholder="Enter article URL..."
+                       autocomplete="off">
+                <button class="btn btn-primary" id="loadUrlBtn">Load</button>
+                <button class="btn btn-secondary" id="pasteTextBtn">Paste Text</button>
+            </div>
+        </header>
+
+        <!-- Text Paste Modal -->
+        <div class="modal hidden" id="textModal">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Paste Text</h2>
+                    <button class="modal-close" id="closeTextModal">&times;</button>
+                </div>
+                <textarea id="textInput"
+                          class="input-field"
+                          placeholder="Paste your text here..."
+                          rows="12"></textarea>
+                <button class="btn btn-primary" id="loadTextBtn">Start Reading</button>
+            </div>
+        </div>
+
+        <!-- Three-Panel Layout -->
+        <main class="panel-container" id="panelContainer">
+            <!-- Left Panel: History -->
+            <aside class="panel panel-left" id="historyPanel">
+                <div class="panel-header">
+                    <h2>History</h2>
+                </div>
+                <div class="panel-content">
+                    <div id="historyList" class="history-list">
+                        <p class="empty-state">No reading history yet</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Resize Handle 1 -->
+            <div class="resize-handle" id="resizeHandle1" data-left="historyPanel" data-right="articlePanel"></div>
+
+            <!-- Middle Panel: Article View -->
+            <section class="panel panel-middle" id="articlePanel">
+                <div class="panel-header">
+                    <h2 id="articleTitle">Select an article</h2>
+                </div>
+                <div class="panel-content article-content" id="articleContent">
+                    <p class="empty-state">Enter a URL above or select from history to start reading</p>
+                </div>
+            </section>
+
+            <!-- Resize Handle 2 -->
+            <div class="resize-handle" id="resizeHandle2" data-left="articlePanel" data-right="rsvpPanel"></div>
+
+            <!-- Right Panel: RSVP Reader -->
+            <section class="panel panel-right" id="rsvpPanel">
+                <div class="panel-header">
+                    <h2>Speed Reader</h2>
+                    <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="panel-content rsvp-content">
+                    <!-- Settings Bar -->
+                    <div class="settings-bar">
+                        <div class="settings-group">
+                            <label for="wpmSlider">Speed: <span id="wpmValue">300</span> WPM</label>
+                            <input type="range"
+                                   id="wpmSlider"
+                                   class="wpm-slider"
+                                   min="300"
+                                   max="900"
+                                   step="50"
+                                   value="300">
+                        </div>
+                    </div>
+
+                    <!-- RSVP Display -->
+                    <div class="rsvp-container">
+                        <div class="rsvp-display">
+                            <div class="focus-line"></div>
+                            <div class="word-display" id="wordDisplay">
+                                <div class="word-wrapper">
+                                    <span class="word-text" id="wordText">Ready</span>
+                                </div>
+                            </div>
+                            <div class="focus-line"></div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="controls">
+                        <button class="control-btn" id="rewindBtn" title="Rewind 10 words (J or ←)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                                <polygon points="11 20 1 12 11 4 11 20"></polygon>
+                            </svg>
+                        </button>
+                        <button class="control-btn control-btn-large" id="playPauseBtn" title="Play/Pause (Space or K)">
+                            <svg class="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            <svg class="pause-icon hidden" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="4" width="4" height="16"></rect>
+                                <rect x="14" y="4" width="4" height="16"></rect>
+                            </svg>
+                        </button>
+                        <button class="control-btn" id="forwardBtn" title="Forward 10 words (L or →)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                                <polygon points="13 4 23 12 13 20 13 4"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats">
+                        <span class="stat-item">Word <span id="currentWord">0</span> of <span id="totalWords">0</span></span>
+                        <span class="stat-item">Time: <span id="timeElapsed">0:00</span></span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/content.js"></script>
+    <script src="scripts/rsvp.js"></script>
+    <script src="scripts/panel-resize.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>

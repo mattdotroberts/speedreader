@@ -1,0 +1,21 @@
+{
+  "name": "speed-reader",
+  "version": "1.0.0",
+  "description": "A clean, minimalist browser-based speed reading app using RSVP technology",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "serve": "npx serve .",
+    "dev": "npx live-server --port=8080 --no-browser"
+  },
+  "keywords": [
+    "speed-reading",
+    "rsvp",
+    "reading",
+    "productivity"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
